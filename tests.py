@@ -29,7 +29,7 @@ class BookDBTestCase(BookAppTestCase):
             self.assertEqual(actual, expected)
 
     def test_title_info_complete(self):
-        use_id, expected = self.db.items()[0]
+        use_id, expected = list(self.db.items())[0]
         actual = self.makeOne().title_info(use_id)
         # demonstrate all actual keys are expected
         for key in actual:
@@ -66,13 +66,13 @@ class ResolvePathTestCase(BookAppTestCase):
 
     def test_book_path_returns_book_function(self):
         from bookapp import book as expected
-        book_id = self.db.keys()[0]
+        book_id = list(self.db.keys())[0]
         path = '/book/{0}'.format(book_id)
         actual, args = self.call_function_under_test(path)
         self.assertTrue(actual is expected)
 
     def test_book_path_returns_bookid_in_args(self):
-        expected = self.db.keys()[0]
+        expected = list(self.db.keys())[0]
         path = '/book/{0}'.format(expected)
         func, actual = self.call_function_under_test(path)
         self.assertTrue(expected in actual)
